@@ -1,0 +1,18 @@
+{
+  "Group": "SnowRunescape",
+  "Name": "Minecart",
+  "Version": "1.0.0",
+  "Description": "plugin responsible for managing the payment orders made by the Minecart",
+  "Authors": [
+    {
+      "Name": "SnowRunescape"
+    }
+  ],
+  "Website": "minecart.com.br",
+  "ServerVersion": "*",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "DisabledByDefault": false,
+  "Main": "br.com.minecart.Main",
+  "IncludesAssetPack": false
+}

@@ -35,11 +35,7 @@ public class MyKeysCommand extends AbstractAsyncCommand {
                         player.sendMessage(CommandMessages.PLAYER_DONT_HAVE_KEY);
                     } else {
                         for (MinecartKey minecartKey : minecartKeys) {
-                            Message msg = CommandMessages.PLAYER_LIST_KEYS_KEY;
-
-                            //msg = this.parseText(msg, minecartKey);
-
-                            player.sendMessage(msg);
+                            player.sendMessage(this.parseText(CommandMessages.PLAYER_LIST_KEYS_KEY, player, minecartKey));
                         }
                     }
                 } catch (Exception e) {
@@ -51,5 +47,11 @@ public class MyKeysCommand extends AbstractAsyncCommand {
         }
 
         return CompletableFuture.completedFuture(null);
+    }
+
+    private Message parseText(Message message, Player player, MinecartKey minecartKey) {
+        return message
+            .param("key.code", minecartKey.getKey())
+            .param("key.product_name", minecartKey.getProductName());
     }
 }
