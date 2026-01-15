@@ -34,7 +34,8 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
         if (sender instanceof Player player) {
             return CompletableFuture.runAsync(() -> {
                 try {
-                    MinecartKey minecartKey = MinecartAPI.redeemKey(player.getDisplayName(), this.key.toString());
+                    String commandKey = commandContext.get(this.key);
+                    MinecartKey minecartKey = MinecartAPI.redeemKey(player.getDisplayName(), commandKey);
 
                     this.delivery(player, minecartKey);
                 } catch (Exception e) {

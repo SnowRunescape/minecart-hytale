@@ -14,5 +14,5 @@
   "OptionalDependencies": {},
   "DisabledByDefault": false,
   "Main": "br.com.minecart.Main",
-  "IncludesAssetPack": false
+  "IncludesAssetPack": true
 }

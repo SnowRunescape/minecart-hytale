@@ -28,8 +28,8 @@ public class HttpRequest {
             connection.setRequestProperty("User-Agent", "Minecart");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.addRequestProperty("X-Game", "Hytale");
-            connection.addRequestProperty("Authorization", Main.MinecartAutorization);
-            connection.addRequestProperty("ShopServer", Main.MinecartShopServer);
+            connection.addRequestProperty("Authorization", Main.CONFIG.get().getShopKey());
+            connection.addRequestProperty("ShopServer", Main.CONFIG.get().getShopServer());
             connection.addRequestProperty("PluginVersion", Main.VERSION);
 
             connection.setUseCaches(false);

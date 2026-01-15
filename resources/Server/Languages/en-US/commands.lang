@@ -1,20 +1,20 @@
-success.player-list-keys-title: '&6Keys Center:'
-success.player-list-keys-key: '&b{key.code} - &6&l{key.product_name}'
-success.redeem-cash: '&7Congratulations &6{player.name}&7, to check your &6&lCASH &7balance type &c/Cash&7.'
-success.active-key: '&7Congratulations &6{player.name}&7, you redeemed a purchase!\n&7You redeemed the product &6&l{key.product_name}&7.'
+success.player-list-keys-title=Keys Center:
+success.player-list-keys-key={key.code} - {key.product_name}
+success.redeem-cash=Congratulations {player.name}, to check your CASH balance type /Cash.
+success.active-key=Congratulations {player.name}, you redeemed a purchase!\nYou redeemed the product {key.product_name}.
 
-error.internal-error: '&cAn internal error occurred, please contact an administrator!'
-error.invalid-shopkey: '&cThe configured &6&lShopKey &cis invalid, please contact an administrator!'
-error.invalid-shopserver: '&cThe configured &6&lShopServer &cis invalid, please contact an administrator!'
-error.cooldown: '&cWait a moment to use this command again!'
-error.redeem-key: '&7An error occurred while obtaining the product &6&l{key.product_name}&7.'
-error.redeem-cash: '&7An error occurred while obtaining &a&l{cash.quantity} &7of &6&lCASH&7.'
-error.clean-inventory: '&7Clear your inventory to execute this command.'
-error.player-only: '&cOnly players can use this command!'
-error.player-dont-have-key: '&cYou don\'t have any KEY.'
-error.nothing-products-cash: '&cYou don\'t have any &6&lCASH &cto redeem!'
-error.commands-product-not-registred: '&cThe product &6&lCommands &cwere not configured, please contact an administrator!'
-error.inform-key: '&7Provide the &6&lKEY&7. &c/redeemkey <key>'
-error.active-key: '&7An error occurred while redeeming the product, try again!'
-error.invalid-key: '&7The key you tried to redeem is invalid!'
-error.not-defined: 'Not defined'
+error.internal-error=An internal error occurred, please contact an administrator!
+error.invalid-shopkey=The configured ShopKey is invalid, please contact an administrator!
+error.invalid-shopserver=The configured ShopServer is invalid, please contact an administrator!
+error.cooldown=Wait a moment to use this command again!
+error.redeem-key=An error occurred while obtaining the product {key.product_name}.
+error.redeem-cash=An error occurred while obtaining {cash.quantity} of CASH.
+error.clean-inventory=Clear your inventory to execute this command.
+error.player-only=Only players can use this command!
+error.player-dont-have-key=You don\t have any KEY.
+error.nothing-products-cash=You don\t have any CASH to redeem!
+error.commands-product-not-registred=The product Commands were not configured, please contact an administrator!
+error.inform-key=Provide the KEY. /redeemkey <key>
+error.active-key=An error occurred while redeeming the product, try again!
+error.invalid-key=The key you tried to redeem is invalid!
+error.not-defined=Not defined
