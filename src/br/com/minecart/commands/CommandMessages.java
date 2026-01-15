@@ -16,5 +16,10 @@ public class CommandMessages {
     public static final Message PLAYER_ONLY = Message.translation("commands.error.player-only").color(Color.RED).bold(true);
     public static final Message PLAYER_DONT_HAVE_KEY = Message.translation("commands.error.player-dont-have-key").color(Color.RED).bold(true);
 
+    public static final Message ERROR_COMMANDS_NOT_REGISTRED = Message.translation("commands.error.commands-product-not-registred").color(Color.RED).bold(true);
+    public static final Message ERROR_DONT_HAVE_CASH = Message.translation("commands.error.nothing-products-cash").color(Color.RED).bold(true);
+    public static final Message ERROR_INVALID_KEY = Message.translation("commands.error.invalid-key").color(Color.RED).bold(true);
+    public static final Message ERROR_INVALID_SHOPKEY = Message.translation("commands.error.invalid-shopkey").color(Color.RED).bold(true);
+    public static final Message ERROR_INVALID_SHOPSERVER = Message.translation("commands.error.invalid-shopserver").color(Color.RED).bold(true);
     public static final Message INTERNAL_SERVER_ERROR = Message.translation("commands.error.internal-error").color(Color.RED).bold(true);
 }

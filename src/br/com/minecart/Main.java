@@ -13,7 +13,7 @@ import br.com.minecart.config.MinecartConfig;
 public class Main extends JavaPlugin {
     public static Config<MinecartConfig> CONFIG;
 
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "3.0.0";
 
     public Main(JavaPluginInit init) {
         super(init);

@@ -15,6 +15,7 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import br.com.minecart.MinecartAPI;
 import br.com.minecart.entities.MinecartKey;
 import br.com.minecart.storage.LOGStorage;
+import br.com.minecart.utilities.http.HttpRequestException;
 
 public class RedeemKeyCommand extends AbstractAsyncCommand {
     private RequiredArg<String> key;
@@ -38,8 +39,8 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
                     MinecartKey minecartKey = MinecartAPI.redeemKey(player.getDisplayName(), commandKey);
 
                     this.delivery(player, minecartKey);
-                } catch (Exception e) {
-                    player.sendMessage(CommandMessages.INTERNAL_SERVER_ERROR);
+                } catch (HttpRequestException e) {
+                    MinecartAPI.processHttpError(player, e.getResponse());
                 }
             });
         } else {
