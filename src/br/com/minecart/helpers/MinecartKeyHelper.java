@@ -3,17 +3,18 @@ package br.com.minecart.helpers;
 import java.util.ArrayList;
 
 import br.com.minecart.Main;
-import br.com.minecart.entities.MinecartKey;
+import br.com.minecart.core.PlayerSessionManager;
+import br.com.minecart.core.entities.Key;
 import br.com.minecart.scheduler.sources.AutomaticDelivery;
 
 public class MinecartKeyHelper {
-    public static ArrayList<MinecartKey> filterByAutomaticDelivery(ArrayList<MinecartKey> minecartKeys) {
-        ArrayList<MinecartKey> tempMinecartKeys = new ArrayList<MinecartKey>();
+    public static ArrayList<Key> filterByAutomaticDelivery(ArrayList<Key> minecartKeys) {
+        ArrayList<Key> tempMinecartKeys = new ArrayList<Key>();
 
         Boolean preventLoginDelivery = Main.CONFIG.get().getPreventLoginDelivery();
         Integer timePreventLoginDelivery = Main.CONFIG.get().getTimePreventLoginDelivery();
 
-        for (MinecartKey minecartKey : minecartKeys) {
+        for (Key minecartKey : minecartKeys) {
             if (
                 minecartKey.getDeliveryAutomaitc() == AutomaticDelivery.ANYTIME || (
                     !preventLoginDelivery
@@ -21,7 +22,7 @@ public class MinecartKeyHelper {
                 ) || (
                     preventLoginDelivery
                     && PlayerHelper.playerOnline(minecartKey.getUsername())
-                    && PlayerHelper.playerTimeOnline(minecartKey.getUsername()) > timePreventLoginDelivery
+                    && PlayerSessionManager.getInstance().getSessionDuration(minecartKey.getUsername()) > timePreventLoginDelivery
                 )
             ) {
                 tempMinecartKeys.add(minecartKey);
@@ -31,13 +32,13 @@ public class MinecartKeyHelper {
         return tempMinecartKeys;
     }
 
-    public static int[] getMinecartKeyIds(ArrayList<MinecartKey> minecartKeys) {
+    public static int[] getMinecartKeyIds(ArrayList<Key> minecartKeys) {
         int counter = 0;
         int quantity = minecartKeys.size();
 
         int[] ids = new int[quantity];
 
-        for (MinecartKey minecartKey : minecartKeys) {
+        for (Key minecartKey : minecartKeys) {
             ids[counter] = minecartKey.getId();
             counter++;
         }

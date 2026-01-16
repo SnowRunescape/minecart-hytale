@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 
-import br.com.minecart.PlayerSessionManager;
+import br.com.minecart.core.PlayerSessionManager;
 
 public class PlayerDisconnectListener implements Consumer<PlayerDisconnectEvent> {
     @Override

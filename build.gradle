@@ -1,0 +1,78 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.0'
+}
+
+group = 'br.com.minecart'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(20)
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compileOnly files('libs/HytaleServer.jar')
+
+    implementation files('libs/minecart-core.jar')
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'resources'
+            srcDir 'src'
+            include 'manifest.json'
+            include 'Server/**'
+        }
+    }
+}
+
+jar {
+    archiveBaseName = 'minecart'
+    archiveVersion = '1.0.0'
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+shadowJar {
+    archiveBaseName = 'minecart'
+    archiveVersion = '1.0.0'
+    archiveClassifier = ''
+    
+    // Incluir apenas as dependências implementation (minecart-core)
+    configurations = [project.configurations.runtimeClasspath]
+    
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    
+    // Evitar problemas com META-INF
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    
+    // Mesclar arquivos de serviço corretamente
+    mergeServiceFiles()
+    
+    // Garantir que o diretório de destino existe e está limpo
+    doFirst {
+        delete file("${buildDir}/libs/minecart-1.0.0.jar")
+    }
+}
+
+// Tornar shadowJar a task padrão de build
+build.dependsOn shadowJar
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
