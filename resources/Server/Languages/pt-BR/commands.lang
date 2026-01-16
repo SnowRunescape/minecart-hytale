@@ -1,20 +1,20 @@
-success.player-list-keys-title: '&6Central de keys:'
-success.player-list-keys-key: '&b{key.code} - &6&l{key.product_name}'
-success.redeem-cash: '&7Parabéns &6{player.name}&7, para ver seu saldo de &6&lCASH &7digite &c/Cash&7.'
-success.active-key: '&7Parabens &6{player.name}&7, você resgatou uma compra!\n&7Você resgatou o produto &6&l{key.product_name}&7.'
+success.player-list-keys-title=Central de keys:
+success.player-list-keys-key={key.code} - {key.product_name}
+success.redeem-cash=Parabéns {player.name}, para ver seu saldo de CASH digite /Cash.
+success.active-key=Parabens {player.name}, você resgatou uma compra!\nVocê resgatou o produto {key.product_name}.
 
-error.internal-error: '&cOcorreu um erro interno, entre em contato com um administrador!'
-error.invalid-shopkey: '&cO &6&lShopKey &cconfigurado é invalido, entre em contato com um administrador!'
-error.invalid-shopserver: '&cO &6&lShopServer &cconfigurado é invalido, entre em contato com um administrador!'
-error.cooldown: '&cAguarde um pouco para usar esse comando novamente!'
-error.redeem-key: '&7Ocorreu um erro ao obter o produto &6&l{key.product_name}&7.'
-error.redeem-cash: '&7Ocorreu um erro ao obter o &a&l{cash.quantity} &7de &6&lCASH&7.'
-error.clean-inventory: '&7Limpe o inventario para poder executar este comando.'
-error.player-only: '&cApenas Jogadores podem utilizar este comando!'
-error.player-dont-have-key: '&cVocê não possui nenhuma KEY.'
-error.nothing-products-cash: '&cVocê não possui &6&lCASH &cpara ser resgatado!'
-error.commands-product-not-registred: '&cOs &6&lComandos &cdo produto não foi configurado, entre em contato com um administrador!'
-error.inform-key: '&7Informe a &6&lKEY&7. &c/resgatarkey <key>'
-error.active-key: '&7Ocorreu um erro ao resgatar o produto, tente novamente!'
-error.invalid-key: '&7A key que você tentou resgatar é invalida!'
-error.not-defined: 'Não definido'
+error.internal-error=Ocorreu um erro interno, entre em contato com um administrador!
+error.invalid-shopkey=O ShopKey configurado é invalido, entre em contato com um administrador!
+error.invalid-shopserver=O ShopServer configurado é invalido, entre em contato com um administrador!
+error.cooldown=Aguarde um pouco para usar esse comando novamente!
+error.redeem-key=Ocorreu um erro ao obter o produto {key.product_name}.
+error.redeem-cash=Ocorreu um erro ao obter o {cash.quantity} de CASH.
+error.clean-inventory=Limpe o inventario para poder executar este comando.
+error.player-only=Apenas Jogadores podem utilizar este comando!
+error.player-dont-have-key=Você não possui nenhuma KEY.
+error.nothing-products-cash=Você não possui CASH para ser resgatado!
+error.commands-product-not-registred=Os Comandos do produto não foi configurado, entre em contato com um administrador!
+error.inform-key=Informe a KEY. /resgatarkey <key>
+error.active-key=Ocorreu um erro ao resgatar o produto, tente novamente!
+error.invalid-key=A key que você tentou resgatar é invalida!
+error.not-defined=Não definido

@@ -14,6 +14,8 @@ import br.com.minecart.commands.MyKeysCommand;
 import br.com.minecart.commands.RedeemCashCommand;
 import br.com.minecart.commands.RedeemKeyCommand;
 import br.com.minecart.config.MinecartConfig;
+import br.com.minecart.core.CommandFailureLogger;
+import br.com.minecart.core.config.MinecartCoreConfig;
 import br.com.minecart.listeners.PlayerConnectListener;
 import br.com.minecart.listeners.PlayerDisconnectListener;
 import br.com.minecart.scheduler.sources.AutomaticDelivery;
@@ -33,6 +35,15 @@ public class Main extends JavaPlugin {
         super.setup();
 
         CONFIG.save();
+
+        MinecartCoreConfig.configure(
+            VERSION,
+            "Hytale",
+            CONFIG.get().getShopKey(),
+            CONFIG.get().getShopServer()
+        );
+
+        CommandFailureLogger.setLogPath(this.getDataDirectory().toString());
 
         this.getCommandRegistry().registerCommand(new MinecartCommand());
         this.getCommandRegistry().registerCommand(new MyKeysCommand());

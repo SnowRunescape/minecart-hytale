@@ -9,8 +9,8 @@ import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 
-import br.com.minecart.MinecartAPI;
-import br.com.minecart.entities.MinecartKey;
+import br.com.minecart.core.MinecartAPI;
+import br.com.minecart.core.entities.Key;
 
 public class MyKeysCommand extends AbstractAsyncCommand {
     public MyKeysCommand() {
@@ -26,7 +26,7 @@ public class MyKeysCommand extends AbstractAsyncCommand {
         if (sender instanceof Player player) {
             return CompletableFuture.runAsync(() -> {
                 try {
-                    ArrayList<MinecartKey> minecartKeys = MinecartAPI.myKeys(player.getDisplayName());
+                    ArrayList<Key> minecartKeys = MinecartAPI.myKeys(player.getDisplayName());
 
                     player.sendMessage(CommandMessages.PLAYER_LIST_KEYS_TITLE);
                     player.sendMessage(Message.raw(""));
@@ -34,7 +34,7 @@ public class MyKeysCommand extends AbstractAsyncCommand {
                     if (minecartKeys.isEmpty()) {
                         player.sendMessage(CommandMessages.PLAYER_DONT_HAVE_KEY);
                     } else {
-                        for (MinecartKey minecartKey : minecartKeys) {
+                        for (Key minecartKey : minecartKeys) {
                             player.sendMessage(this.parseText(CommandMessages.PLAYER_LIST_KEYS_KEY, player, minecartKey));
                         }
                     }
@@ -49,7 +49,7 @@ public class MyKeysCommand extends AbstractAsyncCommand {
         return CompletableFuture.completedFuture(null);
     }
 
-    private Message parseText(Message message, Player player, MinecartKey minecartKey) {
+    private Message parseText(Message message, Player player, Key minecartKey) {
         return message
             .param("key.code", minecartKey.getKey())
             .param("key.product_name", minecartKey.getProductName());

@@ -11,12 +11,12 @@ import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.console.ConsoleSender;
 
 import br.com.minecart.Main;
-import br.com.minecart.MinecartAPI;
-import br.com.minecart.entities.MinecartKey;
+import br.com.minecart.MinecartHttpResponseTranslateMessage;
+import br.com.minecart.core.MinecartAPI;
+import br.com.minecart.core.entities.Key;
+import br.com.minecart.core.utilities.http.HttpRequestException;
 import br.com.minecart.helpers.MinecartKeyHelper;
 import br.com.minecart.scheduler.SchedulerInterface;
-import br.com.minecart.storage.LOGStorage;
-import br.com.minecart.utilities.http.HttpRequestException;
 
 public class AutomaticDelivery implements SchedulerInterface {
     public final static int DELAY = 60;
@@ -27,7 +27,7 @@ public class AutomaticDelivery implements SchedulerInterface {
 
     public void run() {
         try {
-            ArrayList<MinecartKey> minecartKeys = MinecartKeyHelper.filterByAutomaticDelivery(MinecartAPI.deliveryPending());
+            ArrayList<Key> minecartKeys = MinecartKeyHelper.filterByAutomaticDelivery(MinecartAPI.deliveryPending());
 
             if (minecartKeys.isEmpty()) {
                 return;
@@ -37,13 +37,13 @@ public class AutomaticDelivery implements SchedulerInterface {
 
             List<String> commands = new ArrayList<>();
 
-            for (MinecartKey minecartKey : minecartKeys) {
+            for (Key minecartKey : minecartKeys) {
                 Collections.addAll(commands, minecartKey.getCommands());
             }
 
             this.executeCommands(commands);
         } catch (HttpRequestException e) {
-            Message message = MinecartAPI.messageHttpError(ConsoleSender.INSTANCE, e.getResponse());
+            Message message = MinecartHttpResponseTranslateMessage.messageHttpError(ConsoleSender.INSTANCE, e.getResponse());
             ConsoleSender.INSTANCE.sendMessage(message);
         }
     }
@@ -53,9 +53,8 @@ public class AutomaticDelivery implements SchedulerInterface {
 
         for (final String command : commands) {
             HytaleServer.SCHEDULED_EXECUTOR.schedule(() -> {
-                if (!CommandManager.get().handleCommand(ConsoleSender.INSTANCE, command).isDone()) {
-                    LOGStorage.executeCommand(command);
-                }
+                // TODO: implements CommandFailureLogger
+                CommandManager.get().handleCommand(ConsoleSender.INSTANCE, command);
             }, delay, TimeUnit.MILLISECONDS);
 
             delay += Main.CONFIG.get().getDelayExecuteCommands() * 1L;

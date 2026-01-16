@@ -12,10 +12,10 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.console.ConsoleSender;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 
-import br.com.minecart.MinecartAPI;
-import br.com.minecart.entities.MinecartKey;
-import br.com.minecart.storage.LOGStorage;
-import br.com.minecart.utilities.http.HttpRequestException;
+import br.com.minecart.MinecartHttpResponseTranslateMessage;
+import br.com.minecart.core.MinecartAPI;
+import br.com.minecart.core.entities.Key;
+import br.com.minecart.core.utilities.http.HttpRequestException;
 
 public class RedeemKeyCommand extends AbstractAsyncCommand {
     private RequiredArg<String> key;
@@ -36,11 +36,11 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
             return CompletableFuture.runAsync(() -> {
                 try {
                     String commandKey = commandContext.get(this.key);
-                    MinecartKey minecartKey = MinecartAPI.redeemKey(player.getDisplayName(), commandKey);
+                    Key minecartKey = MinecartAPI.redeemKey(player.getDisplayName(), commandKey);
 
                     this.delivery(player, minecartKey);
                 } catch (HttpRequestException e) {
-                    MinecartAPI.processHttpError(player, e.getResponse());
+                    MinecartHttpResponseTranslateMessage.processHttpError(player, e.getResponse());
                 }
             });
         } else {
@@ -50,7 +50,7 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
         return CompletableFuture.completedFuture(null);
     }
 
-    private void delivery(Player player, MinecartKey minecartKey)
+    private void delivery(Player player, Key minecartKey)
     {
         if (this.executeCommands(player, minecartKey)) {
             player.sendMessage(this.parseText(CommandMessages.ERROR_REDEEM_KEY, player, minecartKey));
@@ -59,27 +59,25 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
         }
     }
 
-    private Boolean executeCommands(Player player, MinecartKey minecartKey)
+    private Boolean executeCommands(Player player, Key minecartKey)
     {
         Boolean result = true;
 
         for (String command : minecartKey.getCommands()) {
-            if (!CommandManager.get().handleCommand(ConsoleSender.INSTANCE, command).isDone()) {
-                LOGStorage.executeCommand(command);
-                result = false;
-            }
+            // TODO: implements CommandFailureLogger
+            CommandManager.get().handleCommand(ConsoleSender.INSTANCE, command);
         }
 
         return result;
     }
 
-    private void sendMessageFailed(Player player, MinecartKey minecartKey)
+    private void sendMessageFailed(Player player, Key minecartKey)
     {
         player.sendMessage(CommandMessages.INTERNAL_SERVER_ERROR);
         player.sendMessage(this.parseText(CommandMessages.ERROR_REDEEM_KEY, player, minecartKey));
     }
 
-    private Message parseText(Message message, Player player, MinecartKey minecartKey) {
+    private Message parseText(Message message, Player player, Key minecartKey) {
         return message
             .param("player.name", player.getDisplayName())
             .param("key.product_name", minecartKey.getProductName());

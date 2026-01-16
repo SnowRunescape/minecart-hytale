@@ -10,10 +10,10 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.console.ConsoleSender;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 
-import br.com.minecart.MinecartAPI;
-import br.com.minecart.entities.MinecartCash;
-import br.com.minecart.storage.LOGStorage;
-import br.com.minecart.utilities.http.HttpRequestException;
+import br.com.minecart.MinecartHttpResponseTranslateMessage;
+import br.com.minecart.core.MinecartAPI;
+import br.com.minecart.core.entities.Cash;
+import br.com.minecart.core.utilities.http.HttpRequestException;
 
 public class RedeemCashCommand extends AbstractAsyncCommand {
     public RedeemCashCommand() {
@@ -29,13 +29,13 @@ public class RedeemCashCommand extends AbstractAsyncCommand {
         if (sender instanceof Player player) {
             return CompletableFuture.runAsync(() -> {
                 try {
-                    MinecartCash minecartCash = MinecartAPI.redeemCash(player.getDisplayName());
+                    Cash minecartCash = MinecartAPI.redeemCash(player.getDisplayName());
 
                     if (minecartCash.getQuantity() > 0) {
                         this.delivery(player, minecartCash);
                     }
                 } catch (HttpRequestException e) {
-                    MinecartAPI.processHttpError(player, e.getResponse());
+                    MinecartHttpResponseTranslateMessage.processHttpError(player, e.getResponse());
                 }
             });
         } else {
@@ -45,19 +45,14 @@ public class RedeemCashCommand extends AbstractAsyncCommand {
         return CompletableFuture.completedFuture(null);
     }
 
-    private boolean delivery(Player player, MinecartCash minecartCash) {
+    private boolean delivery(Player player, Cash minecartCash) {
         String command = minecartCash.getCommand();
 
-        if (CommandManager.get().handleCommand(ConsoleSender.INSTANCE, command).isDone()) {
-            player.sendMessage(this.parseText(CommandMessages.SUCCESS_REDEEM_CASH, player));
-            return true;
-        } else {
-            player.sendMessage(CommandMessages.INTERNAL_SERVER_ERROR);
-            player.sendMessage(this.parseText(CommandMessages.ERROR_REDEEM_CASH, player));
+        // TODO: implements CommandFailureLogger
+        CommandManager.get().handleCommand(ConsoleSender.INSTANCE, command);
 
-            LOGStorage.executeCommand(command);
-            return false;
-        }
+        player.sendMessage(this.parseText(CommandMessages.SUCCESS_REDEEM_CASH, player));
+        return true;
     }
 
     private Message parseText(Message message, Player player) {
