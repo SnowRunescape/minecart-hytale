@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'br.com.minecart'
-version = '1.0.0'
+version = '3.0.0'
 
 java {
     toolchain {
@@ -41,36 +41,31 @@ sourceSets {
 
 jar {
     archiveBaseName = 'minecart'
-    archiveVersion = '1.0.0'
+    archiveVersion = version
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 shadowJar {
     archiveBaseName = 'minecart'
-    archiveVersion = '1.0.0'
+    archiveVersion = version
     archiveClassifier = ''
-    
-    // Incluir apenas as dependências implementation (minecart-core)
+
     configurations = [project.configurations.runtimeClasspath]
-    
+
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    
-    // Evitar problemas com META-INF
+
     exclude 'META-INF/*.SF'
     exclude 'META-INF/*.DSA'
     exclude 'META-INF/*.RSA'
-    
-    // Mesclar arquivos de serviço corretamente
+
     mergeServiceFiles()
-    
-    // Garantir que o diretório de destino existe e está limpo
+
     doFirst {
-        delete file("${buildDir}/libs/minecart-1.0.0.jar")
+        delete file("${buildDir}/libs/minecart-${version}.jar")
     }
 }
 
-// Tornar shadowJar a task padrão de build
 build.dependsOn shadowJar
 
 tasks.withType(JavaCompile).configureEach {
