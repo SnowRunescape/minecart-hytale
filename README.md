@@ -15,6 +15,16 @@ With this, you can:
 - 🔑 Distribute access keys and redemptions
 - 💳 Process transactions securely and seamlessly
 
+## Build
+
+To build the project, use the following command:
+
+```bash
+gradle build
+```
+
+This will compile the plugin and generate the JAR file in the `build/libs/` directory.
+
 ## About Minecart
 
 **Minecart** is a virtual store platform specialized in Hytale servers. It offers complete solutions for monetization and engagement of gaming communities. Learn more at [minecart.com.br](https://minecart.com.br)
