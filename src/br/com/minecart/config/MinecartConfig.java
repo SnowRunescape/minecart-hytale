@@ -24,4 +24,16 @@ public class MinecartConfig {
     public String getShopServer() {
         return this.ShopServer;
     }
+
+    public boolean getPreventLoginDelivery() {
+        return true;
+    }
+
+    public long getDelayExecuteCommands() {
+        return 20L;
+    }
+
+    public int getTimePreventLoginDelivery() {
+        return 60;
+    }
 }

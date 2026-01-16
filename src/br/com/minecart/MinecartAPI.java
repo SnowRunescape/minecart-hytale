@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 
 import br.com.minecart.commands.CommandMessages;
@@ -93,6 +94,50 @@ public class MinecartAPI {
         return new MinecartKey(id, productName, username, key, commands, 0);
     }
 
+    public static ArrayList<MinecartKey> deliveryPending() throws HttpRequestException {
+        ArrayList<MinecartKey> minecartKeys = new ArrayList<MinecartKey>();
+
+        HttpResponse response = HttpRequest.httpRequest(MinecartAPI.URL + "/shop/delivery/pending", null);
+
+        if (response.responseCode != 200) {
+            throw new HttpRequestException(response);
+        }
+
+        JsonObject jsonObject = JsonParser.parseString(response.response).getAsJsonObject();
+        JsonArray productsPlayer = jsonObject.getAsJsonArray("products");
+
+        for (JsonElement product : productsPlayer) {
+            JsonObject productObj = product.getAsJsonObject();
+
+            Integer id = productObj.get("id").getAsInt();
+            String username = productObj.get("username").getAsString();
+            String productName = productObj.get("product_name").getAsString();
+            String key = productObj.get("key").getAsString();
+            String[] commands = Utils.convertJsonArrayToStringArray(productObj.get("commands").getAsJsonArray());
+            int deliveryAutomatic = productObj.get("delivery_automatic").getAsInt();
+
+            minecartKeys.add(new MinecartKey(id, productName, username, key, commands, deliveryAutomatic));
+        }
+
+        return minecartKeys;
+    }
+
+    public static boolean deliveryConfirm(int[] ids) {
+        Map<String, String> params = new LinkedHashMap<String, String>();
+
+        for (int i = 0; i < ids.length; i++) {
+            params.put("products[" + i + "]", String.valueOf(ids[i]));
+        }
+
+        try {
+            HttpResponse response = HttpRequest.httpRequest(MinecartAPI.URL + "/shop/delivery/confirm", params);
+
+            return (response.responseCode == 200);
+        } catch (HttpRequestException e) {}
+
+        return false;
+    }
+
     public static void processHttpError(Player player, HttpResponse response) {
         Message message = MinecartAPI.messageHttpError(player, response);
 
@@ -103,7 +148,7 @@ public class MinecartAPI {
         player.sendMessage(message);
     }
 
-    public static Message messageHttpError(Player player, HttpResponse response) {
+    public static Message messageHttpError(CommandSender player, HttpResponse response) {
         if (response.responseCode == 401) {
             return CommandMessages.ERROR_INVALID_SHOPKEY;
         }
