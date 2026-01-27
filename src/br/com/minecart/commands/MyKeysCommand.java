@@ -26,16 +26,20 @@ public class MyKeysCommand extends AbstractAsyncCommand {
         if (sender instanceof Player player) {
             return CompletableFuture.runAsync(() -> {
                 try {
-                    ArrayList<Key> minecartKeys = MinecartAPI.myKeys(player.getDisplayName());
+                    ArrayList<Key> keys = MinecartAPI.myKeys(player.getDisplayName());
 
                     player.sendMessage(CommandMessages.PLAYER_LIST_KEYS_TITLE);
                     player.sendMessage(Message.raw(""));
 
-                    if (minecartKeys.isEmpty()) {
+                    if (keys.isEmpty()) {
                         player.sendMessage(CommandMessages.PLAYER_DONT_HAVE_KEY);
                     } else {
-                        for (Key minecartKey : minecartKeys) {
-                            player.sendMessage(this.parseText(CommandMessages.PLAYER_LIST_KEYS_KEY, player, minecartKey));
+                        for (Key key : keys) {
+                            Message keyMessage = Message.translation("commands.success.player-list-keys-key")
+                                .color(java.awt.Color.GREEN)
+                                .bold(true);
+
+                            player.sendMessage(this.parseText(keyMessage, key));
                         }
                     }
                 } catch (Exception e) {
@@ -49,9 +53,9 @@ public class MyKeysCommand extends AbstractAsyncCommand {
         return CompletableFuture.completedFuture(null);
     }
 
-    private Message parseText(Message message, Player player, Key minecartKey) {
+    private Message parseText(Message message, Key key) {
         return message
-            .param("key.code", minecartKey.getKey())
-            .param("key.product_name", minecartKey.getProductName());
+            .param("key.code", key.getKey())
+            .param("key.product_name", key.getProductName());
     }
 }

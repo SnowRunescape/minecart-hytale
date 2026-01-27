@@ -1,7 +1,7 @@
 {
   "Group": "SnowRunescape",
   "Name": "Minecart",
-  "Version": "1.0.0",
+  "Version": "3.0.1",
   "Description": "plugin responsible for managing the payment orders made by the Minecart",
   "Authors": [
     {

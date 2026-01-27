@@ -21,7 +21,7 @@ import br.com.minecart.listeners.PlayerDisconnectListener;
 import br.com.minecart.scheduler.sources.AutomaticDelivery;
 
 public class Main extends JavaPlugin {
-    public static final String VERSION = "3.0.0";
+    public static final String VERSION = "3.0.1";
 
     public static Config<MinecartConfig> CONFIG;
 

@@ -12,7 +12,7 @@ public class PlayerHelper {
                 return false;
             }
 
-            PlayerRef player = universe.getPlayerByUsername(username, NameMatching.EXACT);
+            PlayerRef player = universe.getPlayerByUsername(username, NameMatching.EXACT_IGNORE_CASE);
 
             if (player != null) {
                 return true;
