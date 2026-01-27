@@ -27,18 +27,18 @@ public class AutomaticDelivery implements SchedulerInterface {
 
     public void run() {
         try {
-            ArrayList<Key> minecartKeys = MinecartKeyHelper.filterByAutomaticDelivery(MinecartAPI.deliveryPending());
+            ArrayList<Key> keys = MinecartKeyHelper.filterByAutomaticDelivery(MinecartAPI.deliveryPending());
 
-            if (minecartKeys.isEmpty()) {
+            if (keys.isEmpty()) {
                 return;
             }
 
-            MinecartAPI.deliveryConfirm(MinecartKeyHelper.getMinecartKeyIds(minecartKeys));
+            MinecartAPI.deliveryConfirm(MinecartKeyHelper.getMinecartKeyIds(keys));
 
             List<String> commands = new ArrayList<>();
 
-            for (Key minecartKey : minecartKeys) {
-                Collections.addAll(commands, minecartKey.getCommands());
+            for (Key key : keys) {
+                Collections.addAll(commands, key.getCommands());
             }
 
             this.executeCommands(commands);

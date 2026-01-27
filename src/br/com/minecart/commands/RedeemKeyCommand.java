@@ -36,9 +36,9 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
             return CompletableFuture.runAsync(() -> {
                 try {
                     String commandKey = commandContext.get(this.key);
-                    Key minecartKey = MinecartAPI.redeemKey(player.getDisplayName(), commandKey);
+                    Key key = MinecartAPI.redeemKey(player.getDisplayName(), commandKey);
 
-                    this.delivery(player, minecartKey);
+                    this.delivery(player, key);
                 } catch (HttpRequestException e) {
                     MinecartHttpResponseTranslateMessage.processHttpError(player, e.getResponse());
                 }
@@ -50,20 +50,20 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
         return CompletableFuture.completedFuture(null);
     }
 
-    private void delivery(Player player, Key minecartKey)
+    private void delivery(Player player, Key key)
     {
-        if (this.executeCommands(player, minecartKey)) {
-            player.sendMessage(this.parseText(CommandMessages.ERROR_REDEEM_KEY, player, minecartKey));
+        if (this.executeCommands(player, key)) {
+            player.sendMessage(this.parseText(CommandMessages.ERROR_REDEEM_KEY, player, key));
         } else {
-            this.sendMessageFailed(player, minecartKey);
+            this.sendMessageFailed(player, key);
         }
     }
 
-    private Boolean executeCommands(Player player, Key minecartKey)
+    private Boolean executeCommands(Player player, Key key)
     {
         Boolean result = true;
 
-        for (String command : minecartKey.getCommands()) {
+        for (String command : key.getCommands()) {
             // TODO: implements CommandFailureLogger
             CommandManager.get().handleCommand(ConsoleSender.INSTANCE, command);
         }
@@ -71,15 +71,15 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
         return result;
     }
 
-    private void sendMessageFailed(Player player, Key minecartKey)
+    private void sendMessageFailed(Player player, Key key)
     {
         player.sendMessage(CommandMessages.INTERNAL_SERVER_ERROR);
-        player.sendMessage(this.parseText(CommandMessages.ERROR_REDEEM_KEY, player, minecartKey));
+        player.sendMessage(this.parseText(CommandMessages.ERROR_REDEEM_KEY, player, key));
     }
 
-    private Message parseText(Message message, Player player, Key minecartKey) {
+    private Message parseText(Message message, Player player, Key key) {
         return message
             .param("player.name", player.getDisplayName())
-            .param("key.product_name", minecartKey.getProductName());
+            .param("key.product_name", key.getProductName());
     }
 }
