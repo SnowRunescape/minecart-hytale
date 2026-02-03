@@ -53,7 +53,7 @@ public class RedeemKeyCommand extends AbstractAsyncCommand {
     private void delivery(Player player, Key key)
     {
         if (this.executeCommands(player, key)) {
-            player.sendMessage(this.parseText(CommandMessages.ERROR_REDEEM_KEY, player, key));
+            player.sendMessage(this.parseText(CommandMessages.SUCCESS_ACTIVE_KEY, player, key));
         } else {
             this.sendMessageFailed(player, key);
         }

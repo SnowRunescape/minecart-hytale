@@ -8,6 +8,7 @@ public class CommandMessages {
     public static final Message PLAYER_LIST_KEYS_TITLE = Message.translation("commands.success.player-list-keys-title").color(Color.GREEN).bold(true);
     public static final Message PLAYER_LIST_KEYS_KEY = Message.translation("commands.success.player-list-keys-key").color(Color.GREEN).bold(true);
 
+    public static final Message SUCCESS_ACTIVE_KEY = Message.translation("commands.success.active-key").color(Color.RED).bold(true);
     public static final Message ERROR_REDEEM_KEY = Message.translation("commands.error.redeem-key").color(Color.RED).bold(true);
 
     public static final Message SUCCESS_REDEEM_CASH = Message.translation("commands.success.redeem-cash").color(Color.RED).bold(true);
